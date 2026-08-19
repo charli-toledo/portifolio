@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfólio | Charli Toledo</title>
+  
+  <!-- Tailwind CSS para Estilização -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React e ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  
+  <!-- Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!-- FontAwesome para os Ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Fontes do Google -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Montserrat:wght@300;400;700;900&family=Playfair+Display:wght@400;700;900&family=Oswald:wght@300;400;700&display=swap');
+    
+    html { scroll-behavior: smooth; }
+    body { background-color: #fafafa; overflow-x: hidden; }
+    
+    /* Classes auxiliares para fontes */
+    .font-thin-custom { font-family: 'Montserrat', sans-serif; font-weight: 300; }
+    .font-regular-custom { font-family: 'Montserrat', sans-serif; font-weight: 400; }
+    .font-bold-custom { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+    .font-inter { font-family: 'Inter', sans-serif; }
+    .font-playfair { font-family: 'Playfair Display', serif; }
+    .font-oswald { font-family: 'Oswald', sans-serif; }
+    
+    /* Efeito Parallax Original Restaurado */
+    .parallax-bg {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    
+    /* Correção específica para Safari Mobile que não lida bem com fundos fixos */
+    @supports (-webkit-touch-callout: none) {
+      .parallax-bg { background-attachment: scroll; }
+    }
+    
+    /* Personalização da barra de rolagem */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+  </style>
+</head>
+<body>
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+
+    // CONFIGURAÇÃO DE PUBLICAÇÃO
+
+    const MODO_PUBLICO = true;
+
+    const hexToRgba = (hex, opacity) => {
+      if (!hex) return `rgba(255, 255, 255, 1)`;
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r}, ${g}, ${b}, ${opacity / 100})`;
+    };
+
+    const defaultData = {
+      globalFontClass: "font-regular-custom",
+      hero: {
+        name: "Charli Toledo",
+        role: "Diretor de Arte e Designer Gráfico",
+        bgImage: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=2564&auto=format&fit=crop",
+        bgOpacity: 50
+      },
+      about: {
+        title: "Sobre mim",
+        text: "Transformando ideias em soluções visuais para o agronegócio e grandes marcas. Foco em identidades corporativas, design editorial e campanhas de alto impacto.",
+        photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
+        boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 42 }
+      },
+      sections: [
+        {
+          id: "sec-logos", type: "gallery-feature", layout: "image-left",
+          title: "Logotipos", text: "Criação de marcas fortes e memoráveis.",
+          featuredImages: ["https://images.unsplash.com/photo-1627384113743-6bd5a479fffd?q=80&w=1000&auto=format&fit=crop"],
+          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
+          images: [
+            { id: "l1", url: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?q=80&w=400&auto=format&fit=crop" },
+            { id: "l2", url: "https://images.unsplash.com/photo-1614036417651-1d4b61bba63c?q=80&w=400&auto=format&fit=crop" }
+          ]
+        },
+        {
+          id: "sec-impressos", type: "gallery-feature", layout: "image-right",
+          title: "Materiais Impressos", text: "Desenvolvimento de Folders, Embalagens, Revistas e Panfletos. Atenção aos detalhes tipográficos e de fechamento de arquivo para garantir a melhor impressão.",
+          featuredImages: [
+            "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=1000&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?q=80&w=1000&auto=format&fit=crop"
+          ],
+          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
+          images: []
+        },
+        {
+          id: "sec-divider", type: "banner",
+          image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2564&auto=format&fit=crop",
+          bgOpacity: 100
+        },
+        {
+          id: "sec-campanhas", type: "gallery-feature", layout: "image-left",
+          title: "Marcas para Campanhas", text: "Selos comemorativos e identidades sazonais.",
+          featuredImages: ["https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=1000&auto=format&fit=crop"],
+          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
+          images: []
+        },
+        {
+          id: "sec-embalagens", type: "gallery-feature", layout: "image-right",
+          title: "Embalagens", text: "Projetos de embalagens que destacam o produto na prateleira.",
+          featuredImages: ["https://images.unsplash.com/photo-1620062024250-8b173cc41d5e?q=80&w=1000&auto=format&fit=crop"],
+          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
+          images: []
+        },
+        {
+          id: "sec-posts", type: "gallery-simple", title: "Posts",
+          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
+          images: [
+            { id: "p1", url: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=400&auto=format&fit=crop" }
+          ]
+        },
+        {
+          id: "sec-3d", type: "gallery-feature", layout: "image-left",
+          title: "Projetos 3D", text: "Modelagem e renderização realista para produtos.",
+          featuredImages: ["https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop"],
+          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
+          images: []
+        },
+        {
+          id: "sec-revista", type: "full-banner-box", layout: "left", boxShape: "wide",
+          title: "Revista Danone em Campo", text: "Projeto de design editorial e diagramação focado no pilar de Bem-Estar Animal e inovações tecnológicas no campo.",
+          bgImage: "https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?q=80&w=2000&auto=format&fit=crop",
+          bgOpacity: 60,
+          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 95, textSize: 18, titleSize: 42 },
+          hasLinks: true,
+          links: [
+            { id: "lk1", label: "Edição 01 - PDF", url: "#" },
+            { id: "lk2", label: "Edição 02 - PDF", url: "#" },
+            { id: "lk3", label: "Edição 03 - PDF", url: "#" },
+            { id: "lk4", label: "Edição 04 - PDF", url: "#" }
+          ]
+        },
+        {
+          id: "sec-agromundi", type: "full-banner-box", layout: "right", boxShape: "square",
+          title: "Identidade Corporativa", text: "AgroMundi - Desenvolvimento completo do sistema de identidade visual.",
+          bgImage: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2000&auto=format&fit=crop",
+          bgOpacity: 60,
+          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 95, textSize: 18, titleSize: 42 },
+          hasLinks: false
+        },
+        {
+          id: "sec-ferramentas", type: "full-banner-tools",
+          title: "Ferramentas", text: "Proficiência técnica em edição gráfica e manipulação avançada.",
+          bgImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop",
+          bgOpacity: 50,
+          boxStyle: { bgColor: "#18181b", textColor: "#ffffff", opacity: 90, textSize: 18, titleSize: 42 },
+          skills: [
+            { id: 's1', name: "Ps", val: "95", color: "#31A8FF" },
+            { id: 's2', name: "Ai", val: "90", color: "#FF9A00" },
+            { id: 's3', name: "Id", val: "85", color: "#FF3366" },
+            { id: 's4', name: "Af", val: "70", color: "#9999FF" },
+            { id: 's5', name: "PPT", val: "80", color: "#D04423" }
+          ]
+        }
+      ],
+      contact: {
+        title: "Contato",
+        text: "Vamos construir algo incrível juntos?",
+        email: "contato@charlitoledo.com",
+        phone: "(00) 00000-0000",
+        linkedin: "linkedin.com/in/charlitoledo",
+        bgImage: "",
+        bgOpacity: 60,
+        boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 42 }
+      }
+    };
+
+    function App() {
+      // Estado Principal
+      const [data, setData] = useState(() => {
+        const saved = localStorage.getItem('charli_portfolio_html_v6');
+        return saved ? JSON.parse(saved) : defaultData;
+      });
+      
+      const [isEditing, setIsEditing] = useState(false);
+      const [lightbox, setLightbox] = useState({ isOpen: false, images: [], currentIndex: 0 });
+
+      // Modal Unificado para Inputs
+      const [promptModal, setPromptModal] = useState({ isOpen: false, type: 'image', url: '', opacity: 100, callback: null });
+      
+      const openImagePrompt = (currentUrl, callback) => {
+        setPromptModal({ isOpen: true, type: 'image', url: currentUrl || '', opacity: 100, callback });
+      };
+      
+      const openBgPrompt = (currentUrl, currentOpacity, callback) => {
+        setPromptModal({ isOpen: true, type: 'background', url: currentUrl || '', opacity: currentOpacity || 100, callback });
+      };
+
+      const handlePromptSubmit = () => {
+        if(promptModal.callback) {
+          promptModal.callback({ url: promptModal.url, opacity: promptModal.opacity });
+        }
+        setPromptModal({ isOpen: false, type: 'image', url: '', opacity: 100, callback: null });
+      };
+
+      // Modal de Cores e Estilos
+      const [colorModal, setColorModal] = useState({ isOpen: false, sectionId: null, styleData: null });
+      const openColorModal = (sectionId, currentStyle) => {
+        const safeStyle = { textSize: 18, titleSize: 36, ...currentStyle }; 
+        setColorModal({ isOpen: true, sectionId, styleData: safeStyle });
+      };
+      
+      const handleColorSubmit = () => {
+        if (colorModal.sectionId === 'about') updateAbout('boxStyle', colorModal.styleData);
+        else if (colorModal.sectionId === 'contact') updateContact('boxStyle', colorModal.styleData);
+        else updateSection(colorModal.sectionId, 'boxStyle', colorModal.styleData);
+        setColorModal({ isOpen: false, sectionId: null, styleData: null });
+      };
+
+      useEffect(() => { localStorage.setItem('charli_portfolio_html_v6', JSON.stringify(data)); }, [data]);
+
+      // Atualizadores
+      const updateHero = (field, value) => setData(p => ({ ...p, hero: { ...p.hero, [field]: value } }));
+      const updateAbout = (field, value) => setData(p => ({ ...p, about: { ...p.about, [field]: value } }));
+      const updateContact = (field, value) => setData(p => ({ ...p, contact: { ...p.contact, [field]: value } }));
+      const updateSection = (id, field, value) => setData(p => ({ ...p, sections: p.sections.map(s => s.id === id ? { ...s, [field]: value } : s) }));
+      const updateSkill = (sectionId, skillId, field, value) => setData(p => ({...p, sections: p.sections.map(s => s.id === sectionId ? { ...s, skills: s.skills.map(sk => sk.id === skillId ? { ...sk, [field]: value } : sk) } : s) }));
+      const updateLink = (sectionId, linkId, field, value) => setData(p => ({...p, sections: p.sections.map(s => s.id === sectionId ? { ...s, links: s.links.map(lk => lk.id === linkId ? { ...lk, [field]: value } : lk) } : s) }));
+
+      const addGalleryImage = (sectionId) => openImagePrompt("", ({url}) => {
+        if (url) updateSection(sectionId, 'images', [...data.sections.find(s=>s.id===sectionId).images, { id: `img-${Date.now()}`, url }]);
+      });
+      const removeGalleryImage = (sectionId, imageId) => {
+        if(confirm("Remover esta imagem da galeria?")) updateSection(sectionId, 'images', data.sections.find(s=>s.id===sectionId).images.filter(img => img.id !== imageId));
+      };
+
+      // Componentes Reutilizáveis
+      const EditableText = ({ value, onChange, className, multiline = false, style={}, isTitle=false, boxStyle={} }) => {
+        let finalStyle = { ...style, whiteSpace: 'pre-wrap' };
+        if(isTitle && boxStyle.titleSize) finalStyle.fontSize = `${boxStyle.titleSize}px`;
+        else if(!isTitle && boxStyle.textSize) finalStyle.fontSize = `${boxStyle.textSize}px`;
+
+        if (!isEditing || MODO_PUBLICO) return <div className={className} style={finalStyle}>{value}</div>;
+        
+        return multiline ? (
+          <textarea value={value} onChange={e => onChange(e.target.value)} className={`w-full bg-black/5 border border-black/20 outline-none p-2 rounded focus:ring-2 focus:ring-blue-500 transition-all resize-y ${className}`} style={finalStyle} rows={4} />
+        ) : (
+          <input type="text" value={value} onChange={e => onChange(e.target.value)} className={`w-full bg-black/5 border border-black/20 outline-none p-1.5 rounded focus:ring-2 focus:ring-blue-500 transition-all ${className}`} style={finalStyle} />
+        );
+      };
+
+      const ColorSettingsButton = ({ onClick }) => {
+        if (!isEditing || MODO_PUBLICO) return null;
+        return (
+          <button onClick={onClick} className="absolute -top-4 -right-4 bg-blue-600 text-white w-10 h-10 rounded-full shadow-lg hover:scale-110 transition-transform flex items-center justify-center z-20 tooltip" title="Editar Aparência">
+            <i className="fa-solid fa-palette"></i>
+          </button>
+        );
+      };
+
+      const BgEditButton = ({ onEdit }) => {
+        if (!isEditing || MODO_PUBLICO) return null;
+        return (
+          <button onClick={onEdit} className="absolute top-4 right-4 bg-white text-black px-4 py-2 rounded-lg text-sm font-bold shadow-xl hover:scale-105 transition-transform flex items-center gap-2 z-50">
+            <i className="fa-regular fa-image"></i> Fundo
+          </button>
+        );
+      };
+
+      const ImageOverlay = ({ onEdit, onRemove }) => {
+        if (!isEditing || MODO_PUBLICO) return null;
+        return (
+          <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center gap-3 opacity-0 hover:opacity-100 transition-opacity z-10">
+            <button onClick={onEdit} className="bg-white text-black px-4 py-2 rounded-lg text-sm font-bold shadow-lg hover:scale-105 transition-transform flex items-center gap-2">
+              <i className="fa-regular fa-image"></i> Trocar
+            </button>
+            {onRemove && (
+              <button onClick={onRemove} className="bg-red-500 text-white w-9 h-9 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center justify-center">
+                <i className="fa-solid fa-trash"></i>
+              </button>
+            )}
+          </div>
+        );
+      };
+
+      // Carrossel de Imagens Destacadas (Automático)
+      const FeaturedCarousel = ({ images = [], onUpdateImages }) => {
+        const [idx, setIdx] = useState(0);
+        
+        useEffect(() => {
+          if(images.length < 2) return;
+          const timer = setInterval(() => {
+            setIdx(prev => (prev + 1) % images.length);
+          }, 3500);
+          return () => clearInterval(timer);
+        }, [images.length]);
+
+        const handleAdd = () => openImagePrompt("", ({url}) => { if(url) onUpdateImages([...images, url]) });
+        const handleEditCurrent = () => openImagePrompt(images[idx], ({url}) => { if(url) { const newImgs = [...images]; newImgs[idx] = url; onUpdateImages(newImgs); } });
+        const handleRemoveCurrent = () => { if(confirm("Remover imagem do destaque?")) { onUpdateImages(images.filter((_, i) => i !== idx)); setIdx(0); } };
+
+        if(images.length === 0) {
+           return (
+             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg bg-zinc-200 border-2 border-dashed border-zinc-400 flex items-center justify-center">
+               {isEditing && !MODO_PUBLICO ? (
+                 <button onClick={handleAdd} className="text-blue-500 font-bold flex flex-col items-center gap-2"><i className="fa-solid fa-plus text-2xl"></i> Adicionar Destaque</button>
+               ) : ( <i className="fa-regular fa-image text-4xl text-zinc-400"></i> )}
+             </div>
+           );
+        }
+
+        return (
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg bg-zinc-200 group">
+            {images.map((img, i) => (
+              <img key={i} src={img} className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === idx ? 'opacity-100 group-hover:scale-105' : 'opacity-0'}`} />
+            ))}
+            
+            {isEditing && !MODO_PUBLICO && (
+              <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center gap-3 opacity-0 hover:opacity-100 transition-opacity z-10">
+                <div className="flex gap-2">
+                  <button onClick={handleEditCurrent} className="bg-white text-black px-4 py-2 rounded-lg text-sm font-bold shadow-lg hover:scale-105 transition-transform flex items-center gap-2"><i className="fa-regular fa-image"></i></button>
+                  {images.length > 1 && <button onClick={handleRemoveCurrent} className="bg-red-500 text-white w-9 h-9 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center justify-center"><i className="fa-solid fa-trash"></i></button>}
+                </div>
+                <button onClick={handleAdd} className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-lg hover:scale-105 transition-transform flex items-center gap-2 mt-2">
+                  <i className="fa-solid fa-plus"></i> Adicionar ao Carrossel
+                </button>
+              </div>
+            )}
+            
+            {images.length > 1 && (!isEditing || MODO_PUBLICO) && (
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-0">
+                {images.map((_, i) => (
+                  <div key={i} className={`w-2 h-2 rounded-full transition-all ${i === idx ? 'bg-white scale-125' : 'bg-white/50'}`}></div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      const safeAboutStyle = { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 42, ...(data.about.boxStyle || {}) };
+      const safeContactStyle = { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 42, ...(data.contact.boxStyle || {}) };
+
+      return (
+        <div className={`min-h-screen text-zinc-900 pb-20 relative ${data.globalFontClass}`}>
+          
+          {/* BARRA SUPERIOR DE EDIÇÃO */}
+          {!MODO_PUBLICO && (
+            <div className="fixed top-0 left-0 right-0 z-50 flex flex-wrap items-center justify-between px-6 py-3 bg-white border-b border-zinc-200 shadow-sm gap-4 font-inter">
+              <div className="flex items-center gap-3">
+                <div className={`w-3 h-3 rounded-full ${isEditing ? 'bg-green-500 animate-pulse' : 'bg-zinc-300'}`}></div>
+                <span className="text-sm font-bold text-zinc-700 hidden md:inline">{isEditing ? "Modo de Edição" : "Modo Visualização"}</span>
+                
+                {isEditing && (
+                  <select value={data.globalFontClass} onChange={e => setData(p => ({...p, globalFontClass: e.target.value}))} className="ml-4 border border-zinc-300 rounded p-1.5 text-xs text-zinc-700 font-bold bg-zinc-50 outline-none">
+                    <option value="font-thin-custom">Fonte: Montserrat (Fina)</option>
+                    <option value="font-regular-custom">Fonte: Montserrat (Regular)</option>
+                    <option value="font-bold-custom">Fonte: Montserrat (Negrito)</option>
+                    <option value="font-playfair">Fonte: Playfair (Elegante)</option>
+                    <option value="font-inter">Fonte: Inter (Limpa)</option>
+                    <option value="font-oswald">Fonte: Oswald</option>
+                  </select>
+                )}
+              </div>
+              <div className="flex gap-2">
+                <button onClick={() => setIsEditing(!isEditing)} className={`flex items-center gap-2 px-5 py-2 rounded-full font-bold transition-all shadow-sm text-sm ${isEditing ? "bg-green-600 text-white hover:bg-green-700" : "bg-zinc-900 text-white hover:bg-zinc-800"}`}>
+                  {isEditing ? <><i className="fa-solid fa-floppy-disk"></i> Salvar Layout</> : <><i className="fa-solid fa-pen"></i> Editar Portfólio</>}
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div className={MODO_PUBLICO ? "" : "pt-16"}>
+            
+            {/* 1. HERO BANNER */}
+            <section className="relative w-full h-[80vh] min-h-[500px] flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+              <div className="absolute inset-0 parallax-bg bg-black" style={{ backgroundImage: `url(${data.hero.bgImage})` }}>
+                <div className="absolute inset-0 bg-black" style={{ opacity: (100 - (data.hero.bgOpacity || 50)) / 100 }}></div>
+              </div>
+              <BgEditButton onEdit={() => openBgPrompt(data.hero.bgImage, data.hero.bgOpacity, ({url, opacity}) => { updateHero('bgImage', url); updateHero('bgOpacity', opacity); })} />
+              
+              <div className="relative z-10 w-full max-w-4xl">
+                <EditableText value={data.hero.name} onChange={v => updateHero('name', v)} className="font-black text-white uppercase tracking-tighter mb-4 drop-shadow-lg text-center font-bold-custom" style={{fontSize: '5rem'}} />
+                <div className="w-24 h-1 bg-white mx-auto mb-6"></div>
+                <EditableText value={data.hero.role} onChange={v => updateHero('role', v)} className="font-light text-zinc-200 drop-shadow-md text-center text-2xl" />
+              </div>
+            </section>
+
+            {/* 2. SOBRE MIM */}
+            <section className="max-w-7xl mx-auto px-6 py-24">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-xl bg-zinc-200 group">
+                  <img src={data.about.photo} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <ImageOverlay onEdit={() => openImagePrompt(data.about.photo, ({url}) => updateAbout('photo', url))} />
+                </div>
+                <div className="relative p-8 md:p-12 rounded-3xl shadow-sm border border-black/5" style={{ backgroundColor: hexToRgba(safeAboutStyle.bgColor, safeAboutStyle.opacity), color: safeAboutStyle.textColor }}>
+                  <ColorSettingsButton onClick={() => openColorModal('about', safeAboutStyle)} />
+                  <EditableText value={data.about.title} onChange={v => updateAbout('title', v)} isTitle={true} boxStyle={safeAboutStyle} className="font-bold-custom tracking-tight mb-6 uppercase" />
+                  <EditableText value={data.about.text} onChange={v => updateAbout('text', v)} multiline={true} boxStyle={safeAboutStyle} className="leading-relaxed border-l-4 pl-6" style={{ borderColor: safeAboutStyle.textColor }} />
+                </div>
+              </div>
+            </section>
+
+            {/* 3. SEÇÕES DINÂMICAS */}
+            <div className="space-y-32">
+              {data.sections.map((section) => {
+                const safeBoxStyle = { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36, ...(section.boxStyle || {}) };
+                const boxStyles = { backgroundColor: hexToRgba(safeBoxStyle.bgColor, safeBoxStyle.opacity), color: safeBoxStyle.textColor };
+
+                // TIPO A: GALERIA COM DESTAQUE
+                if (section.type === 'gallery-feature') {
+                  const isLeft = section.layout === 'image-left';
+                  const fImages = section.featuredImages && section.featuredImages.length > 0 ? section.featuredImages : (section.featuredImage ? [section.featuredImage] : []);
+                  
+                  return (
+                    <section key={section.id} className={`max-w-7xl mx-auto px-6 ${isEditing && !MODO_PUBLICO ? 'p-4 border border-dashed border-zinc-300 rounded-xl bg-white/50' : ''}`}>
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                        
+                        <div className={`flex flex-col sticky top-24 ${!isLeft && 'lg:order-2'}`}>
+                          <FeaturedCarousel images={fImages} onUpdateImages={(newImgs) => updateSection(section.id, 'featuredImages', newImgs)} />
+                        </div>
+                        
+                        <div className={`flex flex-col ${!isLeft && 'lg:order-1'}`}>
+                          <div className="relative p-8 md:p-10 rounded-3xl shadow-sm border border-black/5 mb-8" style={boxStyles}>
+                            <ColorSettingsButton onClick={() => openColorModal(section.id, safeBoxStyle)} />
+                            <EditableText value={section.title} onChange={v => updateSection(section.id, 'title', v)} isTitle={true} boxStyle={safeBoxStyle} className="font-bold-custom mb-4 uppercase tracking-tight" />
+                            <EditableText value={section.text} onChange={v => updateSection(section.id, 'text', v)} multiline={true} boxStyle={safeBoxStyle} className="leading-relaxed opacity-90" />
+                          </div>
+
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                            {section.images && section.images.map((img, idx) => (
+                              <div key={img.id} onClick={(e) => { e.preventDefault(); e.stopPropagation(); if(!isEditing || MODO_PUBLICO) setLightbox({ isOpen: true, images: section.images || [], currentIndex: idx }) }}
+                                className={`relative aspect-square rounded-xl bg-white border border-zinc-200 shadow-sm overflow-hidden group ${(!isEditing || MODO_PUBLICO) ? 'cursor-pointer hover:shadow-md transition-all' : ''}`}>
+                                <img src={img.url} className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-500" />
+                                {isEditing && !MODO_PUBLICO && (
+                                  <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center gap-3 opacity-0 hover:opacity-100 transition-opacity z-10">
+                                    <button onClick={(e) => { e.stopPropagation(); openImagePrompt(img.url, ({url}) => updateSection(section.id, 'images', section.images.map(i => i.id === img.id ? {...i, url} : i))); }} className="bg-white text-black px-4 py-2 rounded-lg text-sm font-bold shadow-lg hover:scale-105 transition-transform"><i className="fa-regular fa-image"></i></button>
+                                    <button onClick={(e) => { e.stopPropagation(); removeGalleryImage(section.id, img.id); }} className="bg-red-500 text-white w-9 h-9 rounded-full shadow-lg hover:scale-105 transition-transform"><i className="fa-solid fa-trash"></i></button>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                            {isEditing && !MODO_PUBLICO && (
+                              <button onClick={() => addGalleryImage(section.id)} className="aspect-square flex flex-col items-center justify-center border-2 border-dashed border-blue-300 rounded-xl text-blue-500 hover:bg-blue-50 transition-colors">
+                                <i className="fa-solid fa-plus text-2xl"></i><span className="text-xs font-bold mt-2">Nova Mídia</span>
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  );
+                }
+
+                // TIPO B: BANNER DIVISÓRIO
+                if (section.type === 'banner') {
+                  const bgOp = section.bgOpacity !== undefined ? section.bgOpacity : 100;
+                  return (
+                    <section key={section.id} className="w-full h-64 md:h-96 relative overflow-hidden">
+                      <BgEditButton onEdit={() => openBgPrompt(section.image, bgOp, ({url, opacity}) => { updateSection(section.id, 'image', url); updateSection(section.id, 'bgOpacity', opacity); })} />
+                      <div className="absolute inset-0 parallax-bg bg-black" style={{ backgroundImage: `url(${section.image})` }}>
+                        <div className="absolute inset-0 bg-black" style={{ opacity: (100 - bgOp) / 100 }}></div>
+                      </div>
+                    </section>
+                  );
+                }
+
+                // TIPO C: POSTS
+                if (section.type === 'gallery-simple') {
+                  return (
+                    <section key={section.id} className={`max-w-7xl mx-auto px-6 ${isEditing && !MODO_PUBLICO ? 'p-4 border border-dashed border-zinc-300 rounded-xl bg-white/50' : ''}`}>
+                      <div className="relative p-6 mb-10 rounded-3xl text-center shadow-sm border border-black/5 mx-auto max-w-2xl" style={boxStyles}>
+                        <ColorSettingsButton onClick={() => openColorModal(section.id, safeBoxStyle)} />
+                        <EditableText value={section.title} onChange={v => updateSection(section.id, 'title', v)} isTitle={true} boxStyle={safeBoxStyle} className="font-bold-custom uppercase tracking-tight text-center" />
+                      </div>
+                      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+                        {section.images && section.images.map((img, idx) => (
+                          <div key={img.id} onClick={(e) => { e.preventDefault(); e.stopPropagation(); if(!isEditing || MODO_PUBLICO) setLightbox({ isOpen: true, images: section.images || [], currentIndex: idx }) }} className={`relative aspect-square rounded-xl bg-white border border-zinc-200 shadow-sm overflow-hidden group ${(!isEditing || MODO_PUBLICO) ? 'cursor-pointer hover:shadow-md transition-all' : ''}`}>
+                            <img src={img.url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            {isEditing && !MODO_PUBLICO && (
+                              <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center gap-3 opacity-0 hover:opacity-100 transition-opacity z-10">
+                                <button onClick={(e) => { e.stopPropagation(); openImagePrompt(img.url, ({url}) => updateSection(section.id, 'images', section.images.map(i => i.id === img.id ? {...i, url} : i))); }} className="bg-white text-black px-4 py-2 rounded-lg text-sm font-bold shadow-lg hover:scale-105 transition-transform"><i className="fa-regular fa-image"></i></button>
+                                <button onClick={(e) => { e.stopPropagation(); removeGalleryImage(section.id, img.id); }} className="bg-red-500 text-white w-9 h-9 rounded-full shadow-lg hover:scale-105 transition-transform"><i className="fa-solid fa-trash"></i></button>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                        {isEditing && !MODO_PUBLICO && (
+                          <button onClick={() => addGalleryImage(section.id)} className="aspect-square flex flex-col items-center justify-center border-2 border-dashed border-blue-300 rounded-xl text-blue-500 hover:bg-blue-50">
+                            <i className="fa-solid fa-plus text-xl"></i>
+                          </button>
+                        )}
+                      </div>
+                    </section>
+                  );
+                }
+
+                // TIPO D: FULL BANNER BOX
+                if (section.type === 'full-banner-box') {
+                  const isRight = section.layout === 'right';
+                  const isSquare = section.boxShape === 'square';
+                  const bgOp = section.bgOpacity !== undefined ? section.bgOpacity : 60;
+
+                  return (
+                    <section key={section.id} className="relative w-full min-h-[80vh] flex items-center px-6 py-20 overflow-hidden">
+                      <div className="absolute inset-0 parallax-bg bg-black z-0" style={{ backgroundImage: `url(${section.bgImage})` }}>
+                         <div className="absolute inset-0 bg-black" style={{ opacity: (100 - bgOp) / 100 }}></div>
+                      </div>
+                      <BgEditButton onEdit={() => openBgPrompt(section.bgImage, bgOp, ({url, opacity}) => { updateSection(section.id, 'bgImage', url); updateSection(section.id, 'bgOpacity', opacity); })} />
+                      
+                      <div className={`relative z-10 w-full max-w-7xl mx-auto flex ${isRight ? 'justify-end' : 'justify-start'}`}>
+                        <div className={`relative p-10 md:p-14 rounded-3xl shadow-2xl border border-black/5 flex flex-col justify-center ${isSquare ? 'max-w-md min-h-[450px] lg:aspect-square' : 'max-w-2xl w-full'}`} style={boxStyles}>
+                          <ColorSettingsButton onClick={() => openColorModal(section.id, safeBoxStyle)} />
+                          <EditableText value={section.title} onChange={v => updateSection(section.id, 'title', v)} isTitle={true} boxStyle={safeBoxStyle} className="font-bold-custom mb-6 uppercase tracking-tight" />
+                          <EditableText value={section.text} onChange={v => updateSection(section.id, 'text', v)} multiline={true} boxStyle={safeBoxStyle} className="leading-relaxed mb-8 opacity-90" />
+                          
+                          {section.hasLinks && section.links && (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto pt-8 border-t border-black/10">
+                              {section.links.map(lk => (
+                                <div key={lk.id}>
+                                  {isEditing && !MODO_PUBLICO ? (
+                                    <div className="bg-black/5 p-2 rounded border border-black/10">
+                                      <input type="text" value={lk.label} onChange={e => updateLink(section.id, lk.id, 'label', e.target.value)} placeholder="Título" className="w-full bg-transparent font-bold text-sm mb-1 outline-none" style={{color: safeBoxStyle.textColor}} />
+                                      <input type="text" value={lk.url} onChange={e => updateLink(section.id, lk.id, 'url', e.target.value)} placeholder="Link do PDF" className="w-full bg-transparent text-xs outline-none opacity-60" style={{color: safeBoxStyle.textColor}} />
+                                    </div>
+                                  ) : (
+                                    <a href={lk.url} target="_blank" className="flex items-center justify-center gap-2 w-full p-4 bg-zinc-900 text-white rounded-xl font-bold hover:bg-zinc-800 transition-colors shadow-lg">
+                                      <i className="fa-regular fa-file-pdf"></i> {lk.label}
+                                    </a>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </section>
+                  );
+                }
+
+                // TIPO E: FERRAMENTAS
+                if (section.type === 'full-banner-tools') {
+                  const bgOp = section.bgOpacity !== undefined ? section.bgOpacity : 50;
+                  return (
+                    <section key={section.id} className="relative w-full min-h-[80vh] flex items-center px-6 py-20 overflow-hidden">
+                      <div className="absolute inset-0 parallax-bg bg-black z-0" style={{ backgroundImage: `url(${section.bgImage})` }}>
+                         <div className="absolute inset-0 bg-black" style={{ opacity: (100 - bgOp) / 100 }}></div>
+                      </div>
+                      <BgEditButton onEdit={() => openBgPrompt(section.bgImage, bgOp, ({url, opacity}) => { updateSection(section.id, 'bgImage', url); updateSection(section.id, 'bgOpacity', opacity); })} />
+                      
+                      <div className="relative z-10 w-full max-w-7xl mx-auto flex justify-end">
+                        <div className="relative p-10 md:p-14 rounded-3xl shadow-2xl max-w-xl w-full border border-black/10" style={boxStyles}>
+                          <ColorSettingsButton onClick={() => openColorModal(section.id, safeBoxStyle)} />
+                          <EditableText value={section.title} onChange={v => updateSection(section.id, 'title', v)} isTitle={true} boxStyle={safeBoxStyle} className="font-bold-custom mb-6 uppercase tracking-tight" />
+                          <EditableText value={section.text} onChange={v => updateSection(section.id, 'text', v)} multiline={true} boxStyle={safeBoxStyle} className="leading-relaxed mb-10 opacity-90" />
+                          
+                          <div className="space-y-6">
+                            {section.skills && section.skills.map(skill => (
+                              <div key={skill.id} className="flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-xl text-white shadow-inner flex-shrink-0" style={{ color: skill.color }}>
+                                  <EditableText value={skill.name} onChange={v => updateSkill(section.id, skill.id, 'name', v)} className="w-full bg-transparent border-none text-center p-0 m-0" />
+                                </div>
+                                <div className="flex-1 bg-black/20 h-6 rounded-full overflow-hidden">
+                                  <div className="h-full transition-all duration-1000" style={{ width: `${skill.val}%`, backgroundColor: skill.color }}></div>
+                                </div>
+                                {isEditing && !MODO_PUBLICO && (
+                                  <div className="flex items-center gap-2">
+                                    <input type="number" value={skill.val} onChange={e => updateSkill(section.id, skill.id, 'val', e.target.value)} className="w-14 bg-white/10 text-sm p-1 rounded border border-white/20 text-center" style={{color: safeBoxStyle.textColor}} />
+                                    <input type="color" value={skill.color} onChange={e => updateSkill(section.id, skill.id, 'color', e.target.value)} className="w-8 h-8 rounded cursor-pointer bg-transparent border-none p-0" />
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                  );
+                }
+                return null;
+              })}
+            </div>
+
+            {/* 4. CONTATO */}
+            <section className="relative w-full min-h-[60vh] flex flex-col items-center justify-center py-24 border-t border-zinc-200 mt-20 overflow-hidden" style={{ backgroundColor: data.contact.bgImage ? 'transparent' : '#ffffff' }}>
+              {data.contact.bgImage && (
+                <div className="absolute inset-0 parallax-bg bg-black z-0" style={{ backgroundImage: `url(${data.contact.bgImage})` }}>
+                  <div className="absolute inset-0 bg-black" style={{ opacity: (100 - (data.contact.bgOpacity||60)) / 100 }}></div>
+                </div>
+              )}
+              
+              <BgEditButton onEdit={() => openBgPrompt(data.contact.bgImage, data.contact.bgOpacity||60, ({url, opacity}) => { updateContact('bgImage', url); updateContact('bgOpacity', opacity); })} />
+              
+              {data.contact.bgImage && isEditing && !MODO_PUBLICO && (
+                <button onClick={() => updateContact('bgImage', "")} className="absolute top-4 right-48 bg-red-500 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-xl hover:scale-105 transition-transform flex items-center gap-2 z-50">
+                  <i className="fa-solid fa-trash"></i> Remover
+                </button>
+              )}
+
+              <div className={`relative z-10 max-w-4xl mx-auto px-6 text-center flex flex-col items-center ${data.contact.bgImage ? 'p-12 rounded-3xl shadow-2xl border border-black/5' : ''}`} 
+                   style={data.contact.bgImage ? { backgroundColor: hexToRgba(safeContactStyle.bgColor, safeContactStyle.opacity), color: safeContactStyle.textColor } : { color: '#18181b' }}>
+                
+                {data.contact.bgImage && <ColorSettingsButton onClick={() => openColorModal('contact', safeContactStyle)} />}
+                
+                <EditableText value={data.contact.title} onChange={v => updateContact('title', v)} isTitle={true} boxStyle={safeContactStyle} className="font-bold-custom mb-6 uppercase tracking-widest text-center" />
+                <EditableText value={data.contact.text} onChange={v => updateContact('text', v)} multiline={true} boxStyle={safeContactStyle} className="leading-relaxed mb-12 max-w-2xl mx-auto text-center opacity-90" />
+                
+                <div className="flex flex-col md:flex-row flex-wrap gap-8 md:gap-12 items-center justify-center mb-16 w-full font-inter">
+                  <div className="flex items-center gap-4 text-xl group"><div className="w-14 h-14 rounded-full flex items-center justify-center bg-black/5 group-hover:bg-blue-100 transition-colors"><i className="fa-regular fa-envelope"></i></div><EditableText value={data.contact.email} onChange={v => updateContact('email', v)} className="bg-transparent text-left" /></div>
+                  <div className="flex items-center gap-4 text-xl group"><div className="w-14 h-14 rounded-full flex items-center justify-center bg-black/5 group-hover:bg-green-100 transition-colors"><i className="fa-solid fa-mobile-screen"></i></div><EditableText value={data.contact.phone} onChange={v => updateContact('phone', v)} className="bg-transparent text-left" /></div>
+                  <div className="flex items-center gap-4 text-xl group"><div className="w-14 h-14 rounded-full flex items-center justify-center bg-black/5 group-hover:bg-blue-200 transition-colors"><i className="fa-brands fa-linkedin"></i></div><EditableText value={data.contact.linkedin} onChange={v => updateContact('linkedin', v)} className="bg-transparent text-left" /></div>
+                </div>
+                
+                <div className="text-sm tracking-widest uppercase opacity-50 font-inter font-bold-custom">{data.hero.name} &copy; {new Date().getFullYear()}</div>
+                
+                {!data.contact.bgImage && isEditing && !MODO_PUBLICO && (
+                  <button onClick={() => openBgPrompt("", 60, ({url, opacity}) => { updateContact('bgImage', url); updateContact('bgOpacity', opacity); })} className="mt-8 text-blue-500 text-sm font-bold flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-full border border-dashed border-blue-300">
+                    <i className="fa-regular fa-image"></i> Colocar Fundo Parallax
+                  </button>
+                )}
+              </div>
+            </section>
+          </div>
+
+          {/* JANELA: INSERIR IMAGEM (COM OPÇÃO DE ARQUIVO LOCAL) E FUNDO */}
+          {promptModal.isOpen && (
+            <div className="fixed inset-0 z-[400] bg-black/80 flex items-center justify-center px-4 font-inter" style={{ backdropFilter: 'blur(5px)' }}>
+              <div className="bg-white p-6 rounded-2xl w-full max-w-md shadow-2xl animate-in zoom-in-95">
+                <h3 className="text-lg font-bold mb-4">{promptModal.type === 'background' ? 'Configurar Fundo' : 'Alterar Imagem'}</h3>
+                
+                <label className="block border-2 border-dashed border-blue-300 bg-blue-50 rounded-xl p-4 text-center cursor-pointer hover:bg-blue-100 transition-colors mb-4">
+                  <span className="text-blue-600 font-bold text-sm flex flex-col items-center gap-2">
+                    <i className="fa-solid fa-folder-open text-2xl"></i>
+                    Escolher Arquivo do Computador
+                  </span>
+                  <span className="text-xs text-blue-400 block mt-1">Apontará para a pasta "imagens/"</span>
+                  <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                    if(e.target.files && e.target.files[0]) {
+                      setPromptModal({...promptModal, url: 'imagens/' + e.target.files[0].name});
+                    }
+                  }} />
+                </label>
+
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="flex-1 h-px bg-zinc-200"></div><span className="text-xs text-zinc-400 font-bold uppercase tracking-widest">Ou Link</span><div className="flex-1 h-px bg-zinc-200"></div>
+                </div>
+
+                <input type="text" value={promptModal.url} onChange={e => setPromptModal({...promptModal, url: e.target.value})} placeholder="https://..." className="w-full border border-zinc-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 outline-none" autoFocus />
+                
+                {promptModal.type === 'background' && (
+                  <div className="mt-6 p-4 bg-zinc-50 rounded-lg border border-zinc-200">
+                    <label className="block text-sm font-bold text-zinc-600 mb-2">Visibilidade da Imagem ({promptModal.opacity}%)</label>
+                    <input type="range" min="10" max="100" value={promptModal.opacity} onChange={e => setPromptModal({...promptModal, opacity: Number(e.target.value)})} className="w-full cursor-pointer" />
+                    <p className="text-xs text-zinc-400 mt-1">Diminua para escurecer o fundo.</p>
+                  </div>
+                )}
+
+                <div className="flex justify-end gap-3 mt-6">
+                  <button onClick={() => setPromptModal({isOpen: false, callback: null})} className="px-4 py-2 text-zinc-600 font-bold hover:bg-zinc-100 rounded-lg transition-colors">Cancelar</button>
+                  <button onClick={handlePromptSubmit} className="px-4 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors">Confirmar</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* JANELA: EDITAR CORES E FONTE DO BOX */}
+          {colorModal.isOpen && (
+            <div className="fixed inset-0 z-[400] bg-black/80 flex items-center justify-center px-4 font-inter" style={{ backdropFilter: 'blur(5px)' }}>
+              <div className="bg-white p-6 rounded-2xl w-full max-w-sm shadow-2xl animate-in zoom-in-95">
+                <h3 className="text-lg font-bold mb-4 flex items-center justify-between">Aparência da Caixa <button onClick={() => setColorModal({isOpen: false})} className="hover:text-red-500"><i className="fa-solid fa-xmark"></i></button></h3>
+                <div className="space-y-5 mb-8">
+                  <div>
+                    <label className="block text-xs font-bold text-zinc-500 mb-1">Cor do Fundo</label>
+                    <input type="color" value={colorModal.styleData.bgColor} onChange={e => setColorModal({...colorModal, styleData: {...colorModal.styleData, bgColor: e.target.value}})} className="w-full h-10 p-1 rounded border cursor-pointer" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-zinc-500 mb-1">Cor dos Textos</label>
+                    <input type="color" value={colorModal.styleData.textColor} onChange={e => setColorModal({...colorModal, styleData: {...colorModal.styleData, textColor: e.target.value}})} className="w-full h-10 p-1 rounded border cursor-pointer" />
+                  </div>
+                  <div className="p-3 bg-zinc-50 rounded-lg border border-zinc-100">
+                    <label className="block text-xs font-bold text-zinc-600 mb-2">Tamanho do Título ({colorModal.styleData.titleSize}px)</label>
+                    <input type="range" min="20" max="64" value={colorModal.styleData.titleSize} onChange={e => setColorModal({...colorModal, styleData: {...colorModal.styleData, titleSize: Number(e.target.value)}})} className="w-full cursor-pointer mb-4" />
+                    
+                    <label className="block text-xs font-bold text-zinc-600 mb-2">Tamanho do Texto ({colorModal.styleData.textSize}px)</label>
+                    <input type="range" min="12" max="28" value={colorModal.styleData.textSize} onChange={e => setColorModal({...colorModal, styleData: {...colorModal.styleData, textSize: Number(e.target.value)}})} className="w-full cursor-pointer" />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-zinc-500 mb-1">Opacidade da Caixa ({colorModal.styleData.opacity}%)</label>
+                    <input type="range" min="10" max="100" value={colorModal.styleData.opacity} onChange={e => setColorModal({...colorModal, styleData: {...colorModal.styleData, opacity: Number(e.target.value)}})} className="w-full cursor-pointer" />
+                  </div>
+                </div>
+                <button onClick={handleColorSubmit} className="w-full py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 shadow-md">Aplicar</button>
+              </div>
+            </div>
+          )}
+
+          {/* CARROSSEL / LIGHTBOX COM BOTÕES DESTACADOS */}
+          {lightbox.isOpen && lightbox.images && lightbox.images.length > 0 && lightbox.images[lightbox.currentIndex]?.url && (
+            <div className="fixed inset-0 z-[500] bg-black/90 flex items-center justify-center">
+              
+              <button onClick={() => setLightbox({ isOpen: false, images: [], currentIndex: 0 })} className="absolute top-4 right-4 md:top-6 md:right-6 text-white bg-black/60 hover:bg-black/80 w-12 h-12 flex items-center justify-center rounded-full transition-colors z-50">
+                <i className="fa-solid fa-xmark text-xl"></i>
+              </button>
+              
+              <div className="absolute top-4 left-4 md:top-6 md:left-6 text-white font-bold tracking-widest bg-black/60 px-4 py-2 rounded-full font-inter z-50">
+                {lightbox.currentIndex + 1} / {lightbox.images.length}
+              </div>
+              
+              <button onClick={(e) => { e.stopPropagation(); setLightbox(p => ({ ...p, currentIndex: (p.currentIndex - 1 + p.images.length) % p.images.length })); }} className="absolute left-2 md:left-6 text-white bg-black/60 hover:bg-black/80 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full transition-all z-50">
+                <i className="fa-solid fa-chevron-left text-2xl md:text-3xl"></i>
+              </button>
+              
+              <div className="w-full h-full max-w-6xl max-h-[90vh] p-4 flex items-center justify-center animate-in fade-in zoom-in-95">
+                <img src={lightbox.images[lightbox.currentIndex].url} className="max-w-full max-h-full object-contain rounded-lg shadow-2xl" />
+              </div>
+              
+              <button onClick={(e) => { e.stopPropagation(); setLightbox(p => ({ ...p, currentIndex: (p.currentIndex + 1) % p.images.length })); }} className="absolute right-2 md:right-6 text-white bg-black/60 hover:bg-black/80 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full transition-all z-50">
+                <i className="fa-solid fa-chevron-right text-2xl md:text-3xl"></i>
+              </button>
+              
+            </div>
+          )}
+
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
