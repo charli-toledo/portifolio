@@ -75,120 +75,340 @@
 
     const defaultData = {
       globalFontClass: "font-regular-custom",
-      hero: {
-        name: "Charli Toledo",
-        role: "Diretor de Arte e Designer Gráfico",
-        bgImage: "https://github.com/charli-toledo/portifolio/blob/main/Banners/Banner_Portifolio.jpg?q=80&w=2564&auto=format&fit=crop",
-        bgOpacity: 50
-      },
-      about: {
-        title: "Sobre mim",
-        text: "Transformando ideias em soluções visuais para o agronegócio e grandes marcas. Foco em identidades corporativas, design editorial e campanhas de alto impacto.",
-        photo: "https://github.com/charli-toledo/portifolio/blob/main/Banners/Banner_Charli-1x1-efeito.jpg?q=80&w=800&auto=format&fit=crop",
-        boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 42 }
-      },
-      sections: [
-        {
-          id: "sec-logos", type: "gallery-feature", layout: "image-left",
-          title: "Logotipos", text: "Criação de marcas fortes e memoráveis.",
-          featuredImages: ["https://images.unsplash.com/photo-1627384113743-6bd5a479fffd?q=80&w=1000&auto=format&fit=crop"],
-          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
-          images: [
-            { id: "l1", url: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?q=80&w=400&auto=format&fit=crop" },
-            { id: "l2", url: "https://images.unsplash.com/photo-1614036417651-1d4b61bba63c?q=80&w=400&auto=format&fit=crop" }
-          ]
-        },
-        {
-          id: "sec-impressos", type: "gallery-feature", layout: "image-right",
-          title: "Materiais Impressos", text: "Desenvolvimento de Folders, Embalagens, Revistas e Panfletos. Atenção aos detalhes tipográficos e de fechamento de arquivo para garantir a melhor impressão.",
-          featuredImages: [
-            "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=1000&auto=format&fit=crop",
-            "https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?q=80&w=1000&auto=format&fit=crop"
-          ],
-          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
-          images: []
-        },
-        {
-          id: "sec-divider", type: "banner",
-          image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2564&auto=format&fit=crop",
-          bgOpacity: 100
-        },
-        {
-          id: "sec-campanhas", type: "gallery-feature", layout: "image-left",
-          title: "Marcas para Campanhas", text: "Selos comemorativos e identidades sazonais.",
-          featuredImages: ["https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=1000&auto=format&fit=crop"],
-          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
-          images: []
-        },
-        {
-          id: "sec-embalagens", type: "gallery-feature", layout: "image-right",
-          title: "Embalagens", text: "Projetos de embalagens que destacam o produto na prateleira.",
-          featuredImages: ["https://images.unsplash.com/photo-1620062024250-8b173cc41d5e?q=80&w=1000&auto=format&fit=crop"],
-          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
-          images: []
-        },
-        {
-          id: "sec-posts", type: "gallery-simple", title: "Posts",
-          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
-          images: [
-            { id: "p1", url: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=400&auto=format&fit=crop" }
-          ]
-        },
-        {
-          id: "sec-3d", type: "gallery-feature", layout: "image-left",
-          title: "Projetos 3D", text: "Modelagem e renderização realista para produtos.",
-          featuredImages: ["https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop"],
-          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 36 },
-          images: []
-        },
-        {
-          id: "sec-revista", type: "full-banner-box", layout: "left", boxShape: "wide",
-          title: "Revista Danone em Campo", text: "Projeto de design editorial e diagramação focado no pilar de Bem-Estar Animal e inovações tecnológicas no campo.",
-          bgImage: "https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?q=80&w=2000&auto=format&fit=crop",
-          bgOpacity: 60,
-          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 95, textSize: 18, titleSize: 42 },
-          hasLinks: true,
-          links: [
-            { id: "lk1", label: "Edição 01 - PDF", url: "#" },
-            { id: "lk2", label: "Edição 02 - PDF", url: "#" },
-            { id: "lk3", label: "Edição 03 - PDF", url: "#" },
-            { id: "lk4", label: "Edição 04 - PDF", url: "#" }
-          ]
-        },
-        {
-          id: "sec-agromundi", type: "full-banner-box", layout: "right", boxShape: "square",
-          title: "Identidade Corporativa", text: "AgroMundi - Desenvolvimento completo do sistema de identidade visual.",
-          bgImage: "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2000&auto=format&fit=crop",
-          bgOpacity: 60,
-          boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 95, textSize: 18, titleSize: 42 },
-          hasLinks: false
-        },
-        {
-          id: "sec-ferramentas", type: "full-banner-tools",
-          title: "Ferramentas", text: "Proficiência técnica em edição gráfica e manipulação avançada.",
-          bgImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop",
-          bgOpacity: 50,
-          boxStyle: { bgColor: "#18181b", textColor: "#ffffff", opacity: 90, textSize: 18, titleSize: 42 },
-          skills: [
-            { id: 's1', name: "Ps", val: "95", color: "#31A8FF" },
-            { id: 's2', name: "Ai", val: "90", color: "#FF9A00" },
-            { id: 's3', name: "Id", val: "85", color: "#FF3366" },
-            { id: 's4', name: "Af", val: "70", color: "#9999FF" },
-            { id: 's5', name: "PPT", val: "80", color: "#D04423" }
-          ]
-        }
+  hero: {
+    name: "Charli Toledo",
+    role: "Diretor de Arte e Designer Gráfico",
+    bgImage: "Banners/Banner_Portifolio.jpg",
+    bgOpacity: 80
+  },
+  about: {
+    title: "Sobre mim",
+    text: "Sou designer gráfico com mais de 30 anos de experiência in comunicação visual e marketing. Tenho formação em Marketing e especialização em Direção de Arte pela ESPM. Ao longo da carreira, desenvolvi projetos de identidade visual, embalagens, fachadas, estandes e materiais gráficos para empresas de diversos segmentos, com forte atuação nos últimos anos no setor do agronegócio, atendendo o Centro-Oeste e grandes Cooperativas Agrícolas do Paraná.\n\nJá tive a oportunidade de trabalhar com marcas de expressão nacional como Danone, Lavoro e Atto Sementes, e fui premiado e finalista no Prêmio de Criação de Vídeo da TVCA, afiliada da Globo no Mato Grosso.\n\nTenho domínio de ferramentas como Photoshop, Illustrator e InDesign, além de estudos em maquete eletrônica com 3D Max. Busco sempre aliar criatividade, experiência prática e pensamento estratégico para entregar soluções visuais eficientes e impactantes.",
+    photo: "Banners/Banner_Charli-1x1-efeito.jpg",
+    boxStyle: {
+      bgColor: "#ffffff",
+      textColor: "#18181b",
+      opacity: 100,
+      textSize: 18,
+      titleSize: 42
+    }
+  },
+  sections: [
+    {
+      id: "sec-logos",
+      type: "gallery-feature",
+      layout: "image-left",
+      title: "Logotipos",
+      text: "Criação de marcas fortes e memoráveis.",
+      featuredImages: [
+        "Logomarcas_Mockups/Capal.jpg",
+        "Logomarcas_Mockups/CSN.jpg",
+        "Logomarcas_Mockups/AgroMundi.jpg",
+        "Logomarcas_Mockups/DrFabricio.jpg",
+        "Logomarcas_Mockups/EstanciaJulia.jpg",
+        "Logomarcas_Mockups/Frisia.jpg"
       ],
+      boxStyle: {
+        bgColor: "#ffffff",
+        textColor: "#18181b",
+        opacity: 100,
+        textSize: 18,
+        titleSize: 36
+      },
+      images: [
+        { id: "l1", url: "Logomarcas/AgroBoi.jpg" },
+        { id: "l2", url: "Logomarcas/AgroMundi.jpg" },
+        { id: "img-1773946741171", url: "Logomarcas/Atto.jpg" },
+        { id: "img-1773946750773", url: "Logomarcas/C6Bio.jpg" },
+        { id: "img-1773946760971", url: "Logomarcas/Capal.jpg" },
+        { id: "img-1773946770572", url: "Logomarcas/CooperAlianca.jpg" },
+        { id: "img-1773946781838", url: "Logomarcas/DrFabricio.jpg" },
+        { id: "img-1773946792021", url: "Logomarcas/EatMeat.jpg" },
+        { id: "img-1773946801712", url: "Logomarcas/Estancia_Julia.jpg" },
+        { id: "img-1773946811525", url: "Logomarcas/FortPao.jpg" },
+        { id: "img-1773946821071", url: "Logomarcas/Frisia.jpg" },
+        { id: "img-1773946834247", url: "Logomarcas/HarasCSN.jpg" },
+        { id: "img-1773946847588", url: "Logomarcas/iRancho.jpg" },
+        { id: "img-1773946858729", url: "Logomarcas/Kaldi.jpg" },
+        { id: "img-1773946867623", url: "Logomarcas/Prillav.jpg" },
+        { id: "img-1773946877434", url: "Logomarcas/Proton.jpg" },
+        { id: "img-1773946887799", url: "Logomarcas/RuralForte.jpg" },
+        { id: "img-1773946898015", url: "Logomarcas/SafeBeef.jpg" },
+        { id: "img-1773946907738", url: "Logomarcas/SantaRita.jpg" },
+        { id: "img-1773946917231", url: "Logomarcas/Strelato.jpg" },
+        { id: "img-1773946926772", url: "Logomarcas/Vascullare.jpg" }
+      ]
+    },
+    {
+      id: "sec-impressos",
+      type: "gallery-feature",
+      layout: "image-right",
+      title: "Materiais Impressos",
+      text: "Desenvolvimento de Folders, Embalagens, Revistas e Panfletos. Atenção aos detalhes tipográficos e de fechamento de arquivo para garantir a melhor impressão.",
+      featuredImages: [
+        "Impressos_Mockups/Branding_Identity-C6Bio.jpg",
+        "Impressos_Mockups/SafeBeef_Cartao.jpg",
+        "Impressos_Mockups/Kaldi-folder.jpg",
+        "Impressos_Mockups/Pickup_Supremax.jpg"
+      ],
+      boxStyle: {
+        bgColor: "#ffffff",
+        textColor: "#18181b",
+        opacity: 100,
+        textSize: 18,
+        titleSize: 36
+      },
+      images: [
+        { id: "img-1773948293115", url: "Impressos/Calendario_Mesa-Procer.jpg" },
+        { id: "img-1773948303884", url: "Impressos/Colorado-Mala_Direta_Viagem.jpg" },
+        { id: "img-1773948315055", url: "Impressos/Convite_ExpoCastrolanda1.jpg" },
+        { id: "img-1773948324075", url: "Impressos/Convite_ExpoCastrolanda2.jpg" },
+        { id: "img-1773948333108", url: "Impressos/Convite_Value.jpg" },
+        { id: "img-1773948342724", url: "Impressos/EatMeat.jpg" },
+        { id: "img-1773948352996", url: "Impressos/Encarte_AlimentacaoSilagem.jpg" },
+        { id: "img-1773948362566", url: "Impressos/Folder_Lavoro-Institucional-1_fechado.jpg" },
+        { id: "img-1773948388216", url: "Impressos/Folder_Lavoro-Institucional-2_aberto.jpg" },
+        { id: "img-1773948400973", url: "Impressos/Revista_Danone1.jpg" },
+        { id: "img-1773948410507", url: "Impressos/Encarte-Mais-Sólidos.jpg" },
+        { id: "img-1773948429906", url: "Impressos/Revista_Danone2.jpg" },
+        { id: "img-1773948440448", url: "Impressos/SafeBeef_Cartao_flying.jpg" }
+      ]
+    },
+    {
+      id: "sec-divider",
+      type: "banner",
+      image: "Banners/Escritorio_DanoneSP.jpg",
+      bgOpacity: 100
+    },
+    {
+      id: "sec-campanhas",
+      type: "gallery-feature",
+      layout: "image-left",
+      title: "Marcas para Campanhas",
+      text: "Selos comemorativos e identidades sazonais.",
+      featuredImages: [
+        "Campanhas_Mockups/ColoradoShow.jpg",
+        "Campanhas_Mockups/Descubra_Danone.jpg",
+        "Campanhas_Mockups/PlanteAmor-ColhaEsperanca.jpg"
+      ],
+      boxStyle: {
+        bgColor: "#ffffff",
+        textColor: "#18181b",
+        opacity: 100,
+        textSize: 18,
+        titleSize: 36
+      },
+      images: [
+        { id: "img-1773949036626", url: "Campanhas/Acelera.jpg" },
+        { id: "img-1773949046362", url: "Campanhas/Agroline.jpg" },
+        { id: "img-1773949055662", url: "Campanhas/Aptur.jpg" },
+        { id: "img-1773949064559", url: "Campanhas/Circuito.jpg" },
+        { id: "img-1773949077275", url: "Campanhas/Colorado-_20anos.jpg" },
+        { id: "img-1773949087449", url: "Campanhas/Conexoes.jpg" },
+        { id: "img-1773949098145", url: "Campanhas/Danone_Campo.jpg" },
+        { id: "img-1773949108313", url: "Campanhas/Decola.jpg" },
+        { id: "img-1773949119693", url: "Campanhas/Descubra_Danone.jpg" },
+        { id: "img-1773949130427", url: "Campanhas/Direcao_Segura.jpg" },
+        { id: "img-1773949140144", url: "Campanhas/Embarque.jpg" },
+        { id: "img-1773949149611", url: "Campanhas/Encontro.jpg" },
+        { id: "img-1773949162759", url: "Campanhas/Juntos.jpg" },
+        { id: "img-1773949171961", url: "Campanhas/Limpa_Estoque.jpg" },
+        { id: "img-1773949182443", url: "Campanhas/Minuto_Barter.jpg" },
+        { id: "img-1773949193476", url: "Campanhas/Plante_Amor.jpg" },
+        { id: "img-1773949203670", url: "Campanhas/Rally.jpg" },
+        { id: "img-1773949212595", url: "Campanhas/Show_Premios.jpg" },
+        { id: "img-1773949223007", url: "Campanhas/Tour_Milho.jpg" }
+      ]
+    },
+    {
+      id: "sec-embalagens",
+      type: "gallery-feature",
+      layout: "image-right",
+      title: "Embalagens",
+      text: "Projetos de embalagens que destacam o produto na prateleira",
+      featuredImages: [
+        "Embalagens_Mockups/Kaldi.jpg",
+        "Embalagens_Mockups/Kaldi-DripCoffee.jpg",
+        "Embalagens_Mockups/Kaldi-Sache.jpg"
+      ],
+      boxStyle: {
+        bgColor: "#ffffff",
+        textColor: "#18181b",
+        opacity: 100,
+        textSize: 18,
+        titleSize: 36
+      },
+      images: [
+        { id: "img-1773949775343", url: "Embalagens/Atto_AP.jpg" },
+        { id: "img-1773949785255", url: "Embalagens/Atto_Diversos.jpg" },
+        { id: "img-1773949795096", url: "Embalagens/Atto_Milhetos.jpg" },
+        { id: "img-1773949803959", url: "Embalagens/C6Bio.jpg" },
+        { id: "img-1773949813263", url: "Embalagens/FortPao.jpg" },
+        { id: "img-1773949822230", url: "Embalagens/Heranca_Holandesa.jpg" },
+        { id: "img-1773949831249", url: "Embalagens/Kaldi.jpg" },
+        { id: "img-1773949840812", url: "Embalagens/Sacarias-RuralForte.jpg" },
+        { id: "img-1773949849561", url: "Embalagens/SememBras.jpg" }
+      ]
+    },
+    {
+      id: "sec-posts",
+      type: "gallery-simple",
+      title: "Posts",
+      boxStyle: {
+        bgColor: "#ffffff",
+        textColor: "#18181b",
+        opacity: 100,
+        textSize: 18,
+        titleSize: 36
+      },
+      images: [
+        { id: "p1", url: "Posts/Aniversario_MT-Agrovenci.jpg" },
+        { id: "img-1773930704793", url: "Posts/Assessoria_AgroMarketing.jpg" },
+        { id: "img-1773930716159", url: "Posts/CropCare.jpg" },
+        { id: "img-1773930729287", url: "Posts/Dia_Arvore_2014.jpg" },
+        { id: "img-1773930743939", url: "Posts/Dia_Arvore_2015.jpg" },
+        { id: "img-1773930756208", url: "Posts/Dia_Arvore.jpg" },
+        { id: "img-1773930767339", url: "Posts/Dia_Biodiversidade-1.jpg" },
+        { id: "img-1773930780440", url: "Posts/Dia_EngAgro_2014.jpg" },
+        { id: "img-1773930791606", url: "Posts/Dia_Gaucho.jpg" },
+        { id: "img-1773930805017", url: "Posts/Dia_Iogurte.jpg" },
+        { id: "img-1773930816389", url: "Posts/Dia_Milho.jpg" },
+        { id: "img-1773930830757", url: "Posts/Dia_Mundial_Agua-Impacto.jpg" },
+        { id: "img-1773930842863", url: "Posts/Dia_Mundial_Solo-Central.jpg" },
+        { id: "img-1773930856287", url: "Posts/Dia_Pecuaria.jpg" },
+        { id: "img-1773930869520", url: "Posts/Dia_Solo_2015.jpg" },
+        { id: "img-1773930881619", url: "Posts/Dia_Terra-2.jpg" },
+        { id: "img-1773951025021", url: "Posts/ESG_CropCare.jpg" },
+        { id: "img-1773951035669", url: "Posts/Essenziale.jpg" },
+	{ id: "img-1773951045687", url: "Posts/Etanol-Impacto.jpg" },
+	{ id: "img-1773951057570", url: "Posts/ExpoCastrolanda.jpg" },
+	{ id: "img-1773951067963", url: "Posts/Fazendo_Historia_1.jpg" },
+	{ id: "img-1773951078585", url: "Posts/Fomento-Seja_cliente.jpg" },
+	{ id: "img-1773951090869", url: "Posts/Mais_Integridade_2024.jpg" },
+	{ id: "img-1773951101635", url: "Posts/MaisCafe-SolucoesCertas.jpg" },
+	{ id: "img-1773951125217", url: "Posts/Microbiologia.jpg" },
+	{ id: "img-1773951136633", url: "Posts/Milho_Certo-3_Pouco_tempo.jpg" },
+	{ id: "img-1773951146833", url: "Posts/Natal_CropCare.jpg" },
+	{ id: "img-1773951157148", url: "Posts/NoroesteMineiro.jpg" },
+	{ id: "img-1773951168056", url: "Posts/Procer_Estatistica2.jpg" },
+	{ id: "img-1773951178348", url: "Posts/Procer_Estatistica3.jpg" },
+	{ id: "img-1773951188430", url: "Posts/Procer_Monitore_Celular.jpg" },
+	{ id: "img-1773951201017", url: "Posts/Proclamacao-2021.jpg" },
+	{ id: "img-1773951214687", url: "Posts/Produtividade_Impacto.jpg" },
+	{ id: "img-1773951226363", url: "Posts/Projeto_Social-Cultura.jpg" },
+	{ id: "img-1773951237462", url: "Posts/SolucoesCertas-Impacto.jpg" },
+	{ id: "img-1773951249144", url: "Posts/Tecnologia.jpg" },
+	{ id: "img-1773951259463", url: "Posts/Vacina_Aftosa-Acabar_vacinacao.jpg" },
+	{ id: "img-1773951271625", url: "Posts/Valor_1000-1.jpg" },
+	{ id: "img-1774548926883", url: "Posts/Zigurat.jpg" }
+      ]
+    },
+    {
+      id: "sec-3d",
+      type: "gallery-feature",
+      layout: "image-left",
+      title: "Projetos 3D",
+      text: "Apaixonado pelo universo 3D, como hobby, desenvolvi alguns projetos.",
+      featuredImages: ["Projetos_3D/Predio.jpg"],
+      boxStyle: {
+	bgColor: "#ffffff",
+	textColor: "#18181b",
+	opacity: 100,
+	textSize: 18,
+	titleSize: 36
+      },images: [
+	{ id: "img-1773951538428", url: "Projetos_3D/Casa_foto.jpg" },
+	{ id: "img-1773951570709", url: "Projetos_3D/Cozinha.jpg" },
+	{ id: "img-1773951584315", url: "Projetos_3D/Quarto.jpg" },
+	{ id: "img-1773951599761", url: "Projetos_3D/Sala_predio_noite.jpg" },
+	{ id: "img-1773951611373", url: "Projetos_3D/Sala.jpg" },
+	{ id: "img-1773951621108", url: "Projetos_3D/Balcao_kaldi.jpg" },
+	{ id: "img-1773951698041", url: "Projetos_3D/Semente_Grafitada_Camadas.png" },
+	{ id: "img-1786973721253", url: "Projetos_3D/Donuts.jpg" }
+      ]
+    },
+    {
+      id: "sec-revista",
+      type: "full-banner-box",
+      layout: "left",
+      boxShape: "wide",
+      title: "Revista Danone em Campo",
+      text: "Edição trimestral da Danone, com editorial voltado para fornecedores e público interno, aborda diversas ações que a empresa fez durante o período, além de informações importantes aos produtores de leite sobre cuidados e manejo.",
+      bgImage: "Revista_Danone/Capa-Revista_Danone_Ed-11.jpg",
+      bgOpacity: 100,
+      boxStyle: {
+	bgColor: "#ffffff",
+	textColor: "#18181b",
+	opacity: 95,
+	textSize: 18,
+	titleSize: 42
+      },
+      hasLinks: true,
+	links: [
+	{ id: "lk1", label: "Edição 11 - PDF", url: "Revista_Danone/Revista_Danone_Ed-11.pdf" },
+	{ id: "lk2", label: "Edição 12 - PDF", url: "Revista_Danone/Revista_Danone_Ed-12.pdf" },
+	{ id: "lk3", label: "Edição 13 - PDF", url: "Revista_Danone/Revista_Danone_Ed-13.pdf" },
+	{ id: "lk4", label: "Edição 14 - PDF", url: "Revista_Danone/Revista_Danone_Ed-14.pdf" }
+      ]
+    },
+    {
+      id: "sec-agromundi",
+      type: "full-banner-box",
+      layout: "right",
+      boxShape: "square",
+      title: "Identidade Corporativa",
+      text: "Cartão de visitas, envelopes, papel timbrado, pasta canguru e assinatura de e-mail, tudo personalizado com identidade forte e marcante.",
+      bgImage: "Impressos_Mockups/Branding_Identity-Agromundi.jpg",
+      bgOpacity: 100,
+      boxStyle: {
+	bgColor: "#ffffff",
+	textColor: "#18181b",
+	opacity: 95,
+	textSize: 18,
+	titleSize: 42
+      },
+      hasLinks: false
+    },
+    {
+      id: "sec-ferramentas",
+      type: "full-banner-tools",
+      title: "Ferramentas",
+      text: "Os softwares mais utilizados nos meus trabalhos são o Photoshop e Illustrator, mas também desenvolvo projetos no InDesign, After Effects e Apresentações no Power Point.",
+      bgImage: "Banners/Lavoro_360-MiniMundo-2x1.jpg",
+      bgOpacity: 90,
+      boxStyle: {
+	bgColor: "#18181b",
+	textColor: "#ffffff",
+	opacity: 90,
+	textSize: 18,
+	titleSize: 42
+      },
+      skills: [
+	{ id: "s1", name: "Ps", val: "100", color: "#31A8FF" },
+	{ id: "s2", name: "Ai", val: "100", color: "#FF9A00" },
+	{ id: "s3", name: "Id", val: "80", color: "#FF3366" },
+	{ id: "s4", name: "Af", val: "70", color: "#9999FF" },
+	{ id: "s5", name: "PPT", val: "90", color: "#D04423" }
+      ]
+    }
+    ],
       contact: {
-        title: "Contato",
-        text: "Vamos construir algo incrível juntos?",
-        email: "contato@charlitoledo.com",
-        phone: "(00) 00000-0000",
-        linkedin: "linkedin.com/in/charlitoledo",
-        bgImage: "",
-        bgOpacity: 60,
-        boxStyle: { bgColor: "#ffffff", textColor: "#18181b", opacity: 100, textSize: 18, titleSize: 42 }
-      }
-    };
+      title: "Contato",
+      text: "Nesta página procurei apresentar alguns trabalhos desenvolvidos\nao longo da minha carreira.\n\nCaso queira entrar em contato comigo, utilize os canais abaixo.",
+	email: "charli_toledo@hotmail.com",
+	phone: "+55 16 99706-3868",
+	linkedin: "charli-toledo",
+      bgImage: "",
+      bgOpacity: 60,
+      boxStyle: {
+	bgColor: "#ffffff",
+	textColor: "#18181b",
+	opacity: 100,
+	textSize: 18,
+	titleSize: 42
+    }
+  }
+};
 
     function App() {
       // Estado Principal
